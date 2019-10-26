@@ -43,7 +43,8 @@ public class UrlScreenshotServiceImpl implements UrlScreenshotService {
     public UrlScreenShotDTO screenshotWebsite(String url) throws IOException {
         String urlName = url.split("\\.")[WEBSITE_DOMAIN_NAME_INDEX];
         String timeStamp = "_"+new SimpleDateFormat("yyyy-MM-dd.HH.mm.ss.sss").format(new Date());
-        final File websiteScreenshotFilePath = new File("screenshot-cache/"+urlName + timeStamp+".jpg").getAbsoluteFile();
+        String fileName = urlName + timeStamp + ".jpg";
+        final File websiteScreenshotFilePath = new File("screenshot-cache/" + fileName).getAbsoluteFile();
         final WebDriver driver = getWebDriver();
         try {
             LOGGER.info("Opening web page for url: {}", url);
@@ -55,7 +56,7 @@ public class UrlScreenshotServiceImpl implements UrlScreenshotService {
         }
 
         UrlScreenShotDTO urlScreenShotDTO = new UrlScreenShotDTO();
-        urlScreenShotDTO.setUrlName(urlName);
+        urlScreenShotDTO.setUrlName(fileName);
         urlScreenShotDTO.setScreenShotFilePath(websiteScreenshotFilePath);
 
         return urlScreenShotDTO;
@@ -72,9 +73,9 @@ public class UrlScreenshotServiceImpl implements UrlScreenshotService {
             FileUtils.copyFile(outputFile, websiteScreenshot);
             LOGGER.info("Screenshot saved: {}", websiteScreenshot);
         } catch (InterruptedException e) {
-            LOGGER.error("Unable to Render and Capture due to application timeout:{}");
+            LOGGER.error("Unable to Render and Capture due to application timeout:", e.getMessage());
         } catch (IOException e) {
-            LOGGER.error("Unable to save screenshot due to:{}");
+            LOGGER.error("Unable to save screenshot due to:",e.getMessage());
         }
     }
 

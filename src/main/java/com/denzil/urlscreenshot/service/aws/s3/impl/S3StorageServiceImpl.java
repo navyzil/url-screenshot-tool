@@ -37,9 +37,6 @@ public class S3StorageServiceImpl implements S3StorageService {
         checkAndCreateBucket(bucketName, amazonS3);
         LOGGER.info("Image will be saved under the bucket name:{}", bucketName);
 
-        String timeStamp = "_"+new SimpleDateFormat("yyyy-MM-dd.HH.mm.ss.sss").format(new Date());
-        key = key + timeStamp;
-
         PutObjectResult putObjectResult = amazonS3.putObject(bucketName, key, file);
         return putObjectResult.getETag();
     }
