@@ -16,6 +16,7 @@ import com.amazonaws.services.securitytoken.model.GetSessionTokenRequest;
 import com.amazonaws.services.securitytoken.model.GetSessionTokenResult;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 /**
@@ -26,51 +27,13 @@ import org.springframework.stereotype.Service;
 public class S3ConnectionService {
     private static Logger LOGGER = LoggerFactory.getLogger(S3ConnectionService.class);
 
-    private AWSCredentials credentials;
-    private AWSStaticCredentialsProvider awsStaticCredentialsProvider;
-    private AmazonS3 amazonS3;
-
-    public S3ConnectionService(String awsAccessKey, String secretAccessKey)
-    {
-        credentials = new BasicAWSCredentials(awsAccessKey, secretAccessKey);
-    }
+    @Autowired
+    private AWSConnectionService awsConnectionService;
 
     public AmazonS3 connectToS3()
     {
-        try {
-            return connectUsingBasicCredentials();
-        }
-        catch(AmazonS3Exception e)
-        {
-            return connectUsingSecurityToken();
-        }
-    }
-
-    private AmazonS3 connectUsingSecurityToken() {
-        LOGGER.warn("Application will connect using Security Token Service");
-        AWSSecurityTokenService sts_client = AWSSecurityTokenServiceClientBuilder.standard().build();
-        GetSessionTokenRequest sessionTokenRequest = new GetSessionTokenRequest();
-        GetSessionTokenResult sessionToken =
-                sts_client.getSessionToken(sessionTokenRequest);
-        Credentials credentials = sessionToken.getCredentials();
-        BasicSessionCredentials sessionCredentials = new BasicSessionCredentials(
-                credentials.getAccessKeyId(),
-                credentials.getSecretAccessKey(),
-                credentials.getSessionToken());
-        awsStaticCredentialsProvider =  new AWSStaticCredentialsProvider(sessionCredentials);
-        amazonS3 = generateAmazonS3Builder(awsStaticCredentialsProvider);
-        return amazonS3;
-    }
-
-    private AmazonS3 connectUsingBasicCredentials() {
-        awsStaticCredentialsProvider = new AWSStaticCredentialsProvider(credentials);
-        amazonS3 = generateAmazonS3Builder(awsStaticCredentialsProvider);
-        LOGGER.info("checking Connection");
-        if(amazonS3.listBuckets().isEmpty())
-        {
-            LOGGER.warn("Unable to access aws using credentials:{}-{}", credentials.getAWSAccessKeyId(),credentials.getAWSSecretKey());
-            throw new AmazonS3Exception("Unable to access aws");
-        }
+        AWSStaticCredentialsProvider awsStaticCredentialsProvider = awsConnectionService.getAwsStaticCredentialsProvider();
+        AmazonS3 amazonS3 = generateAmazonS3Builder(awsStaticCredentialsProvider);
         return amazonS3;
     }
 

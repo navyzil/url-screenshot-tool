@@ -3,6 +3,7 @@ package com.denzil.urlscreenshot.service.s3;
 import com.amazonaws.services.s3.model.S3ObjectSummary;
 import com.denzil.urlscreenshot.service.TestContextConfiguration;
 import org.joda.time.DateTimeUtils;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -77,6 +78,7 @@ public class S3StorageServiceTest {
         assertTrue(s3ObjectSummaries.isEmpty());
     }
 
+    @Ignore("This will fail since the catsAndPuppies11570261308636 is no longer exist")
     @Test
     public void shouldDownloadImageBasedOnGivenExistingBucketAndKey()
     {
@@ -88,6 +90,7 @@ public class S3StorageServiceTest {
 
     }
 
+    @Ignore("This will fail since the catsAndPuppies11570261308636 is no longer exist")
     @Test
     public void shouldDownloadImageIfAndCreateNewFolder()
     {

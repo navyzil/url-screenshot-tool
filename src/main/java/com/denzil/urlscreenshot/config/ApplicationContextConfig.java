@@ -7,6 +7,7 @@ import com.denzil.urlscreenshot.service.impl.UrlScannerServiceImpl;
 import com.denzil.urlscreenshot.service.impl.UrlScreenshotServiceImpl;
 import com.denzil.urlscreenshot.service.s3.S3StorageService;
 import com.denzil.urlscreenshot.service.s3.impl.S3StorageServiceImpl;
+import com.denzil.urlscreenshot.service.s3.utils.AWSConnectionService;
 import com.denzil.urlscreenshot.service.s3.utils.S3ConnectionService;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
@@ -20,16 +21,19 @@ import org.springframework.context.annotation.PropertySource;
 @Configuration
 @PropertySource("classpath:application.properties")
 public class ApplicationContextConfig {
-
     @Value("${aws.s3.access.key}")
-    private String awsS3AccessKey;
-
+    private String awsAccessKey;
     @Value("${aws.s3.secret.key}")
-    private String awsS3SecretKey;
+    private String secretAccessKey;
+
+    @Bean
+    public AWSConnectionService awsConnectionService() {
+        return new AWSConnectionService(awsAccessKey, secretAccessKey);
+    }
 
     @Bean
     public S3ConnectionService s3ConnectionService() {
-        return new S3ConnectionService(awsS3AccessKey, awsS3SecretKey);
+        return new S3ConnectionService();
     }
 
     @Bean
