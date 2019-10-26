@@ -1,9 +1,9 @@
-package com.denzil.urlscreenshot.service.s3.impl;
+package com.denzil.urlscreenshot.service.aws.s3.impl;
 
 import com.amazonaws.services.s3.AmazonS3;
 import com.amazonaws.services.s3.model.*;
-import com.denzil.urlscreenshot.service.s3.S3StorageService;
-import com.denzil.urlscreenshot.service.s3.utils.S3ConnectionService;
+import com.denzil.urlscreenshot.service.aws.s3.S3StorageService;
+import com.denzil.urlscreenshot.service.aws.s3.utils.S3ConnectionService;
 import org.apache.commons.io.FileUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

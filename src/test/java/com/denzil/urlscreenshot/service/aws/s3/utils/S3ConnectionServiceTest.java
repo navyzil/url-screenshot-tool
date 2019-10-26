@@ -1,4 +1,4 @@
-package com.denzil.urlscreenshot.service.s3.utils;
+package com.denzil.urlscreenshot.service.aws.s3.utils;
 
 import com.amazonaws.services.s3.AmazonS3;
 

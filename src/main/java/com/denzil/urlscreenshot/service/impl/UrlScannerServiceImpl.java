@@ -4,7 +4,7 @@ import com.amazonaws.services.s3.model.S3ObjectSummary;
 import com.denzil.urlscreenshot.dto.UrlScreenShotDTO;
 import com.denzil.urlscreenshot.service.UrlScannerService;
 import com.denzil.urlscreenshot.service.UrlScreenshotService;
-import com.denzil.urlscreenshot.service.s3.S3StorageService;
+import com.denzil.urlscreenshot.service.aws.s3.S3StorageService;
 import com.denzil.urlscreenshot.util.FileProcessorUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
