@@ -1,0 +1,5 @@
+# exclude non development files
+.idea/*
+screenshot-cache/*
+target/*
+url-screenshot-project.iml
