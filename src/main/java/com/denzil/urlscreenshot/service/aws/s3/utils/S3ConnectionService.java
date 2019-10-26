@@ -21,6 +21,16 @@ public class S3ConnectionService {
     @Autowired
     private AWSConnectionService awsConnectionService;
 
+    private String region;
+
+    public S3ConnectionService(String region)
+    {
+        this.region = Regions.AP_SOUTHEAST_1.getName();
+        if(!region.isEmpty()){
+            this.region = region;
+        }
+    }
+
     public AmazonS3 connectToS3()
     {
         AWSStaticCredentialsProvider awsStaticCredentialsProvider = awsConnectionService.getAwsStaticCredentialsProvider();
@@ -28,11 +38,11 @@ public class S3ConnectionService {
         return amazonS3;
     }
 
-    private static AmazonS3 generateAmazonS3Builder(AWSStaticCredentialsProvider awsStaticCredentialsProvider) {
+    private AmazonS3 generateAmazonS3Builder(AWSStaticCredentialsProvider awsStaticCredentialsProvider) {
         return AmazonS3ClientBuilder
                 .standard()
                 .withCredentials(awsStaticCredentialsProvider)
-                .withRegion(Regions.AP_SOUTHEAST_1)
+                .withRegion(region)
                 .build();
     }
 }

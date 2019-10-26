@@ -20,6 +20,8 @@ public class TestContextConfiguration {
     private String awsAccessKey;
     @Value("${aws.s3.secret.key}")
     private String secretAccessKey;
+    @Value("${aws.s3.region}")
+    private String region;
 
 
     @Bean
@@ -29,7 +31,7 @@ public class TestContextConfiguration {
 
     @Bean
     public S3ConnectionService s3ConnectionService() {
-        return new S3ConnectionService();
+        return new S3ConnectionService(region);
     }
 
     @Bean

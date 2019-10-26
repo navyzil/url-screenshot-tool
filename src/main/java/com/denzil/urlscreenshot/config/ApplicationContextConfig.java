@@ -25,6 +25,8 @@ public class ApplicationContextConfig {
     private String awsAccessKey;
     @Value("${aws.s3.secret.key}")
     private String secretAccessKey;
+    @Value("${aws.s3.region}")
+    private String region;
 
     @Bean
     public AWSConnectionService awsConnectionService() {
@@ -33,7 +35,7 @@ public class ApplicationContextConfig {
 
     @Bean
     public S3ConnectionService s3ConnectionService() {
-        return new S3ConnectionService();
+        return new S3ConnectionService(region);
     }
 
     @Bean
