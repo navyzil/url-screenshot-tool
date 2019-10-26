@@ -5,7 +5,9 @@ A Jar Application that captures the image of the url and stores it to an AWS S3
 	 On the command line enter the following:
      java -jar url-screenshot-project-1.0-SNAPSHOT.jar <arguments>
      The <arguments> are the series of commands that is needed to execute the behavior of the application
+	 
 •	Commands
+
       list - Displays all of the url screenshot stored in AWS S3
       command syntax: 
       list <bucket-name> for displaying all of screenshots data stored in AWS S3 under the Bucket Name
